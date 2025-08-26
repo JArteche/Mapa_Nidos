@@ -1,0 +1,2508 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa y lista de nidos interactiva</title>
+<style>
+  body { margin:0; font-family: Arial, sans-serif; }
+  #contenedor { display: flex; height: 100vh; }
+  #mapa { flex: 2; width: 100%; height: 100vh; min-height: 300px; }
+  #lista { flex: 1; overflow-y: auto; padding: 10px; border-left: 2px solid #ccc; }
+  
+  /* Sticky header para el título de la lista */
+  #lista h2 {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10;
+    margin-top: 0;
+    padding: 10px 0;
+    border-bottom: 2px solid #ccc;
+  }
+
+  #lista li:hover { background-color: #e0e0e0; }
+
+  @media (max-width: 768px) {
+    #contenedor {
+      flex-direction: column;
+    }
+    #mapa, #lista {
+      flex: none;
+      width: 100%;
+      height: 50vh;
+      min-height: 200px;
+      border-left: none;
+      border-top: 2px solid #ccc;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="contenedor">
+    <div id="mapa"><!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_85b86c94533544cb22d54da25a51dda7 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ardhi/Leaflet.MousePosition/src/L.Control.MousePosition.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ardhi/Leaflet.MousePosition/src/L.Control.MousePosition.min.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_85b86c94533544cb22d54da25a51dda7" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_85b86c94533544cb22d54da25a51dda7 = L.map(
+                "map_85b86c94533544cb22d54da25a51dda7",
+                {
+                    center: [21.83464884590164, -84.92207330819673],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_85b86c94533544cb22d54da25a51dda7);
+
+            
+
+        
+    
+            var tile_layer_c2b6639814091378fa2e3eec79fe819a = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c2b6639814091378fa2e3eec79fe819a.addTo(map_85b86c94533544cb22d54da25a51dda7);
+        
+    
+            var tile_layer_727686e546267802a82575f38e2a84f8 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Tiles \u00a9 Esri ...",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var tile_layer_f23fed951b8a2d05747ff290461c7981 = L.tileLayer(
+                "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Map data \u00a9 OpenStreetMap contributors, SRTM | Map style: \u00a9 OpenTopoMap (CC-BY-SA)",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var feature_group_55fa314f6d5b287ac3dd5300c33fe9b7 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var heat_map_89bd499d4afe21ee16b94308b9b34658 = L.heatLayer(
+                [[21.849765, -84.9456843, 50], [21.8486288, -84.9449539, 50], [21.8485811, -84.9448807, 50], [21.8484264, -84.9448033, 50], [21.8481228, -84.9446459, 50], [21.8480161, -84.9446538, 50], [21.8479324, -84.9445806, 50], [21.848785, -84.9449236, 50], [21.848797, -84.944913, 50], [21.848652, -84.9448767, 50], [21.8339049, -84.9244393, 50], [21.8341134, -84.9249561, 50], [21.8341134, -84.9249561, 50], [21.8343004, -84.9255425, 50], [21.834746, -84.9265968, 50], [21.8347628, -84.9266216, 50], [21.8348545, -84.9274653, 50], [21.8349199, -84.9275225, 50], [21.8349105, -84.9276511, 50], [21.8349459, -84.9276665, 50], [21.834964, -84.9277639, 50], [21.8350178, -84.9279545, 50], [21.835063, -84.9281731, 50], [21.8350489, -84.9281995, 50], [21.8357229, -84.9301028, 50], [21.8351023, -84.9282033, 50], [21.8351065, -84.9282334, 50], [21.8357456, -84.9307736, 50], [21.8352377, -84.9285417, 50], [21.8352508, -84.9286073, 50], [21.8351882, -84.9286291, 50], [21.8352004, -84.9286324, 50], [21.8352763, -84.9287573, 50], [21.8352701, -84.9287647, 50], [21.8354596, -84.9292745, 50], [21.8354514, -84.9293402, 50], [21.8354548, -84.9294339, 50], [21.835457, -84.9294532, 50], [21.8355889, -84.9295977, 50], [21.8355618, -84.9295387, 50], [21.8354789, -84.9294574, 50], [21.8355856, -84.9296689, 50], [21.8355821, -84.9297494, 50], [21.8356366, -84.9300268, 50], [21.835683, -84.930102, 50], [21.8356546, -84.9301568, 50], [21.8356336, -84.9303755, 50], [21.8357377, -84.9304625, 50], [21.8356918, -84.930678, 50], [21.8357652, -84.9307791, 50], [21.8357833, -84.9308188, 50], [21.8357418, -84.9308879, 50], [21.8357653, -84.930898, 50], [21.835802, -84.9310797, 50], [21.835814, -84.9311091, 50], [21.8358419, -84.9311727, 50], [21.8358501, -84.9311955, 50], [21.8357817, -84.9312877, 50], [21.8358007, -84.9313109, 50], [21.8358395, -84.9313421, 50], [21.8358587, -84.9313512, 50], [21.8359337, -84.9313829, 50], [21.8359384, -84.9316949, 50], [21.8359508, -84.9317074, 50], [21.8360236, -84.9318925, 50], [21.836043, -84.9319832, 50], [21.8360664, -84.932045, 50], [21.8358021, -84.931122, 50], [21.8360665, -84.9321303, 50], [21.8360834, -84.9321311, 50], [21.835759, -84.930788, 50], [21.8361204, -84.9320955, 50], [21.8360697, -84.9321879, 50], [21.8361515, -84.9322407, 50], [21.8361958, -84.9323596, 50], [21.8362946, -84.9325572, 50], [21.8362714, -84.9325887, 50], [21.8358704, -84.9314065, 50], [21.8362734, -84.9327063, 50], [21.8363675, -84.9327332, 50], [21.8363755, -84.9326533, 50], [21.8363255, -84.9326669, 50], [21.8365257, -84.9329997, 50], [21.8365028, -84.932997, 50], [21.8366161, -84.9332974, 50], [21.8352129, -84.9287239, 50], [21.8366074, -84.9333434, 50], [21.8365409, -84.933343, 50], [21.8364249, -84.932892, 50], [21.8363703, -84.9331388, 50], [21.83286, -84.9225541, 50], [21.8327702, -84.9224025, 50], [21.8354185, -84.9292585, 50], [21.835905, -84.9318403, 50], [21.8348322, -84.927064, 50], [21.8365515, -84.9332416, 50], [21.8362209, -84.9325265, 50], [21.8336182, -84.9239011, 50], [21.8327786, -84.9223965, 50], [21.8361158, -84.9321179, 50], [21.8351566, -84.9286218, 50], [21.8360911, -84.9323965, 50], [21.8349341, -84.92772, 50], [21.82304, -84.87185, 94], [21.8231, -84.87172, 138], [21.8231, -84.87231, 104], [21.82312, -84.87169, 127], [21.82297, -84.87127, 111], [21.82302, -84.87135, 101], [21.82302, -84.87164, 84], [21.823024, -84.8715522, 127], [21.8230152, -84.8712706, 110], [21.8229757, -84.8714721, 113], [21.8230609, -84.8715625, 130], [21.823088, -84.8715781, 115], [21.8229392, -84.8715083, 158], [21.8228804, -84.8711328, 113], [21.8230701, -84.8714901, 120], [21.8229846, -84.8712349, 130], [21.8230334, -84.87158, 92], [21.8230406, -84.8715721, 105], [21.8228664, -84.8710919, 120]],
+                {
+  "minOpacity": 0.6,
+  "maxZoom": 15,
+  "radius": 10,
+  "blur": 15,
+  "gradient": {
+  0.2: "green",
+  0.5: "yellow",
+  0.8: "orange",
+  1.0: "red",
+},
+  "maxOpacity": 0.6,
+}
+            );
+        
+    
+            heat_map_89bd499d4afe21ee16b94308b9b34658.addTo(feature_group_55fa314f6d5b287ac3dd5300c33fe9b7);
+        
+    
+            feature_group_55fa314f6d5b287ac3dd5300c33fe9b7.addTo(map_85b86c94533544cb22d54da25a51dda7);
+        
+    
+            var feature_group_a4539806b4d84a1537b67dca5727028b = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_87a534e899804dd06b4032166321018d = L.marker(
+                [21.849765, -84.9456843],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_cfdac8ee42ce065980618fffa6248b62 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e01\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_87a534e899804dd06b4032166321018d.setIcon(div_icon_cfdac8ee42ce065980618fffa6248b62);
+            
+    
+            var marker_eb4a66dea1ec9be0ef8a073b9ada044e = L.marker(
+                [21.8486288, -84.9449539],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_562861fe8aa527cc87a1a9a24ea97f8a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e02\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_eb4a66dea1ec9be0ef8a073b9ada044e.setIcon(div_icon_562861fe8aa527cc87a1a9a24ea97f8a);
+            
+    
+            var marker_8c2c8a6aae36099cea0f0850ace6e43c = L.marker(
+                [21.8485811, -84.9448807],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_d08e866a39b0713aa4704de9b33701ce = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e03\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_8c2c8a6aae36099cea0f0850ace6e43c.setIcon(div_icon_d08e866a39b0713aa4704de9b33701ce);
+            
+    
+            var marker_6232052636f4f1d4a36de760f7ff7813 = L.marker(
+                [21.8484264, -84.9448033],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_37d09772b1e1a212efc04ebe50c249c5 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e04\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_6232052636f4f1d4a36de760f7ff7813.setIcon(div_icon_37d09772b1e1a212efc04ebe50c249c5);
+            
+    
+            var marker_6c53e3dc182dc63f65260593e296be72 = L.marker(
+                [21.8481228, -84.9446459],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_8db628dce2eb17f8d4e70e0e49eef927 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e05\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_6c53e3dc182dc63f65260593e296be72.setIcon(div_icon_8db628dce2eb17f8d4e70e0e49eef927);
+            
+    
+            var marker_84544a31c1764df05b3aae46bdbfbc44 = L.marker(
+                [21.8480161, -84.9446538],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_a680e7c90450499676f72b0ee448aae0 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e06\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_84544a31c1764df05b3aae46bdbfbc44.setIcon(div_icon_a680e7c90450499676f72b0ee448aae0);
+            
+    
+            var marker_4bd486351f76aaffebe0935bc7f6d35c = L.marker(
+                [21.8479324, -84.9445806],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_d4d57a1dc33e8481da70ea42bb932278 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e07\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_4bd486351f76aaffebe0935bc7f6d35c.setIcon(div_icon_d4d57a1dc33e8481da70ea42bb932278);
+            
+    
+            var marker_687e44bdfac6cb5b62e292d11e8574ef = L.marker(
+                [21.848785, -84.9449236],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_5139a9a3716fb39214d2697eec7d203f = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e08\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_687e44bdfac6cb5b62e292d11e8574ef.setIcon(div_icon_5139a9a3716fb39214d2697eec7d203f);
+            
+    
+            var marker_86d8e23b906d7b35061089d116c22a28 = L.marker(
+                [21.848797, -84.944913],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_1c1424d3e77ec5876b5dedb54019df0e = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e09\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_86d8e23b906d7b35061089d116c22a28.setIcon(div_icon_1c1424d3e77ec5876b5dedb54019df0e);
+            
+    
+            var marker_3d3abcb83861e76b3560bfbaa4fcf7eb = L.marker(
+                [21.848652, -84.9448767],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_f59c93dbfd195cfedcef02ebcbde0963 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: green; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e10\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_3d3abcb83861e76b3560bfbaa4fcf7eb.setIcon(div_icon_f59c93dbfd195cfedcef02ebcbde0963);
+            
+    
+            var marker_70a75279b45efdbf72a66aa92fc4161b = L.marker(
+                [21.8339049, -84.9244393],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_3cfdd1527261ca67e546c4b4c970ecb4 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e01\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_70a75279b45efdbf72a66aa92fc4161b.setIcon(div_icon_3cfdd1527261ca67e546c4b4c970ecb4);
+            
+    
+            var marker_eea548a73487a74e244ca7b462bf1441 = L.marker(
+                [21.8341134, -84.9249561],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_0d9c27f371322c3ead54a8256a328fdc = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e02\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_eea548a73487a74e244ca7b462bf1441.setIcon(div_icon_0d9c27f371322c3ead54a8256a328fdc);
+            
+    
+            var marker_6e0271fc47928a96ffc2465e37d24f8f = L.marker(
+                [21.8341134, -84.9249561],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_495ff1a68a99032fdb4610086b438435 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e03\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_6e0271fc47928a96ffc2465e37d24f8f.setIcon(div_icon_495ff1a68a99032fdb4610086b438435);
+            
+    
+            var marker_4cc1cc6ff6c48146d60ef87c42d7c2bb = L.marker(
+                [21.8343004, -84.9255425],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_04e602fbad0e7be9e36d871be211c11a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e04\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_4cc1cc6ff6c48146d60ef87c42d7c2bb.setIcon(div_icon_04e602fbad0e7be9e36d871be211c11a);
+            
+    
+            var marker_16ac101ec1c956ed0acf94fa329f52cd = L.marker(
+                [21.834746, -84.9265968],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_1066c70cd6944cccdf979bda84a2f266 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e05\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_16ac101ec1c956ed0acf94fa329f52cd.setIcon(div_icon_1066c70cd6944cccdf979bda84a2f266);
+            
+    
+            var marker_d380052cd59f6311654462b941639c4a = L.marker(
+                [21.8347628, -84.9266216],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_6c03a5446242ab886315bdf6d7296709 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e06\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_d380052cd59f6311654462b941639c4a.setIcon(div_icon_6c03a5446242ab886315bdf6d7296709);
+            
+    
+            var marker_886571522d4b0009202252870a4e817b = L.marker(
+                [21.8348545, -84.9274653],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_663e282688dbe53281dd37447bcb6e83 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e07\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_886571522d4b0009202252870a4e817b.setIcon(div_icon_663e282688dbe53281dd37447bcb6e83);
+            
+    
+            var marker_2b3147c52154f00abbc9359b83af58cf = L.marker(
+                [21.8349199, -84.9275225],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_6692a916e70327410ac9bd11bb78fa10 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e08\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_2b3147c52154f00abbc9359b83af58cf.setIcon(div_icon_6692a916e70327410ac9bd11bb78fa10);
+            
+    
+            var marker_36c6669e5150863689e4ae225c5b809f = L.marker(
+                [21.8349105, -84.9276511],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_793a9f951e2027b61f3a5c5d1a676d1f = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e09\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_36c6669e5150863689e4ae225c5b809f.setIcon(div_icon_793a9f951e2027b61f3a5c5d1a676d1f);
+            
+    
+            var marker_3f8c6d00b6f16c430ff8c87fda05636a = L.marker(
+                [21.8349459, -84.9276665],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_18ce30f0245cea8704af5dcc9cd2ea01 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e10\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_3f8c6d00b6f16c430ff8c87fda05636a.setIcon(div_icon_18ce30f0245cea8704af5dcc9cd2ea01);
+            
+    
+            var marker_89a32b51eea6d1190bc6174822a8b267 = L.marker(
+                [21.834964, -84.9277639],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_d572bd8dacd6cd96cb8adee146626f89 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e11\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_89a32b51eea6d1190bc6174822a8b267.setIcon(div_icon_d572bd8dacd6cd96cb8adee146626f89);
+            
+    
+            var marker_6e0e982d9bfd103c2e7a3d19f94ca501 = L.marker(
+                [21.8350178, -84.9279545],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_8f7b1dcc2bdd3f7488457da82f588ed2 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e12\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_6e0e982d9bfd103c2e7a3d19f94ca501.setIcon(div_icon_8f7b1dcc2bdd3f7488457da82f588ed2);
+            
+    
+            var marker_7d89c7dcfe03ac5b4a992913fee07697 = L.marker(
+                [21.835063, -84.9281731],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_46ecc8f9dc914e8d419f3dce15bb060f = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e13\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_7d89c7dcfe03ac5b4a992913fee07697.setIcon(div_icon_46ecc8f9dc914e8d419f3dce15bb060f);
+            
+    
+            var marker_7ef6a8c7e020a81bb906d077799ef338 = L.marker(
+                [21.8350489, -84.9281995],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_e0210e84b325f91dd6c7bbbd4bbd499a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e14\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_7ef6a8c7e020a81bb906d077799ef338.setIcon(div_icon_e0210e84b325f91dd6c7bbbd4bbd499a);
+            
+    
+            var marker_6987244a74b8d237d78f694779db4497 = L.marker(
+                [21.8357229, -84.9301028],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_90b68fc975b0dc5ec336b431ae67f372 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e15\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_6987244a74b8d237d78f694779db4497.setIcon(div_icon_90b68fc975b0dc5ec336b431ae67f372);
+            
+    
+            var marker_8aa44f3186448358fdb1e52a839cebb8 = L.marker(
+                [21.8351023, -84.9282033],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_49d0e0ffc0fb68cdbea030b1b9c847b4 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e16\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_8aa44f3186448358fdb1e52a839cebb8.setIcon(div_icon_49d0e0ffc0fb68cdbea030b1b9c847b4);
+            
+    
+            var marker_fa3b72e59bbdc3d9387e34dbac2ee31f = L.marker(
+                [21.8351065, -84.9282334],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_e3bc4518f184d890777087de09d0ea0e = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e17\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_fa3b72e59bbdc3d9387e34dbac2ee31f.setIcon(div_icon_e3bc4518f184d890777087de09d0ea0e);
+            
+    
+            var marker_1f8a8aeb30cb6991911035e00d85d27c = L.marker(
+                [21.8357456, -84.9307736],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_1d8b71f5ffce96a11e488dce66bf26a8 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e18\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_1f8a8aeb30cb6991911035e00d85d27c.setIcon(div_icon_1d8b71f5ffce96a11e488dce66bf26a8);
+            
+    
+            var marker_71dcd7096d835488a1e3cc7fbe4f20d7 = L.marker(
+                [21.8352377, -84.9285417],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_90444860580032c94998b91b3977f34d = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e19\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_71dcd7096d835488a1e3cc7fbe4f20d7.setIcon(div_icon_90444860580032c94998b91b3977f34d);
+            
+    
+            var marker_81bfac887062bec13151303c2150ef73 = L.marker(
+                [21.8352508, -84.9286073],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_2c62f0afcb1b5265761c3d68378597eb = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e20\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_81bfac887062bec13151303c2150ef73.setIcon(div_icon_2c62f0afcb1b5265761c3d68378597eb);
+            
+    
+            var marker_ed97f13ffe1c01f06c8217db1dc18878 = L.marker(
+                [21.8351882, -84.9286291],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_d3cf9f340b1e4928894d895b033e3377 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e21\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_ed97f13ffe1c01f06c8217db1dc18878.setIcon(div_icon_d3cf9f340b1e4928894d895b033e3377);
+            
+    
+            var marker_8463915c8768e1da0cdec5eb7a507f13 = L.marker(
+                [21.8352004, -84.9286324],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_b4deddafcbb9e2fe4124ea51f358959f = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e22\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_8463915c8768e1da0cdec5eb7a507f13.setIcon(div_icon_b4deddafcbb9e2fe4124ea51f358959f);
+            
+    
+            var marker_003fb2acae045ab9aaf641f6a08366e0 = L.marker(
+                [21.8352763, -84.9287573],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_d264aef0db52f77931e88163efc7d1b6 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e23\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_003fb2acae045ab9aaf641f6a08366e0.setIcon(div_icon_d264aef0db52f77931e88163efc7d1b6);
+            
+    
+            var marker_9d910036d6c0ef95ee178c926f5af2ec = L.marker(
+                [21.8352701, -84.9287647],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_2c712fd3efceb7a72e6c22945609dfe6 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e24\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_9d910036d6c0ef95ee178c926f5af2ec.setIcon(div_icon_2c712fd3efceb7a72e6c22945609dfe6);
+            
+    
+            var marker_7632945a46cc9381031d566d45b24bc3 = L.marker(
+                [21.8354596, -84.9292745],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_b508637065349219dfa983d58d6a679d = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e25\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_7632945a46cc9381031d566d45b24bc3.setIcon(div_icon_b508637065349219dfa983d58d6a679d);
+            
+    
+            var marker_365693972b61ac91f4e4104879796cd9 = L.marker(
+                [21.8354514, -84.9293402],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_5186bfcfeb7cbdcb4cce7df6b79ed056 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e26\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_365693972b61ac91f4e4104879796cd9.setIcon(div_icon_5186bfcfeb7cbdcb4cce7df6b79ed056);
+            
+    
+            var marker_c40bb662684bb40b09f8665e9ae9935e = L.marker(
+                [21.8354548, -84.9294339],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_7f39b807c18a1393ba413d9833c93f48 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e27\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_c40bb662684bb40b09f8665e9ae9935e.setIcon(div_icon_7f39b807c18a1393ba413d9833c93f48);
+            
+    
+            var marker_09ccbb3d645d52762329e317fbde6789 = L.marker(
+                [21.835457, -84.9294532],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_3c798196b3de06b6611ce155793f80f6 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e28\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_09ccbb3d645d52762329e317fbde6789.setIcon(div_icon_3c798196b3de06b6611ce155793f80f6);
+            
+    
+            var marker_eea1787e43ae0175514848c4d7a9def9 = L.marker(
+                [21.8355889, -84.9295977],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_23fd9740cf6dc80bc7ffa0fe4fcd37ad = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e29\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_eea1787e43ae0175514848c4d7a9def9.setIcon(div_icon_23fd9740cf6dc80bc7ffa0fe4fcd37ad);
+            
+    
+            var marker_08cdd98f9b34e9f58d4901522de62273 = L.marker(
+                [21.8355618, -84.9295387],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_a8749c62974cace61d5951f0f62c0507 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e30\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_08cdd98f9b34e9f58d4901522de62273.setIcon(div_icon_a8749c62974cace61d5951f0f62c0507);
+            
+    
+            var marker_a8687d962938bdacc41db086e2cf47da = L.marker(
+                [21.8354789, -84.9294574],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_7f3cdef12833fe0e2665e807d7f51e4c = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e31\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_a8687d962938bdacc41db086e2cf47da.setIcon(div_icon_7f3cdef12833fe0e2665e807d7f51e4c);
+            
+    
+            var marker_ead3933c3f84eb1adeeb0cd2787dcb4e = L.marker(
+                [21.8355856, -84.9296689],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_edc2ca6c29ee4742f35e6255d1257d79 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e32\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_ead3933c3f84eb1adeeb0cd2787dcb4e.setIcon(div_icon_edc2ca6c29ee4742f35e6255d1257d79);
+            
+    
+            var marker_5f9cc2c13efc6071884a791d04a9060b = L.marker(
+                [21.8355821, -84.9297494],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_5d2e180f70b618c613047d1fc6e1157d = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e33\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_5f9cc2c13efc6071884a791d04a9060b.setIcon(div_icon_5d2e180f70b618c613047d1fc6e1157d);
+            
+    
+            var marker_65b7d602d04f7ff94f7ee67d935e60c3 = L.marker(
+                [21.8356366, -84.9300268],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_6a5a5b5b72f93ac8b1c017bee4629d6f = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e34\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_65b7d602d04f7ff94f7ee67d935e60c3.setIcon(div_icon_6a5a5b5b72f93ac8b1c017bee4629d6f);
+            
+    
+            var marker_130e065c0628fdb5c48f1c437b1e459e = L.marker(
+                [21.835683, -84.930102],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_36a08c8438f31eb6250e5851b0ec1b5b = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e35\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_130e065c0628fdb5c48f1c437b1e459e.setIcon(div_icon_36a08c8438f31eb6250e5851b0ec1b5b);
+            
+    
+            var marker_2afc3042c05d5410995e839c56233d1b = L.marker(
+                [21.8356546, -84.9301568],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_9068d4cc98355846eb348e5cbfa4bcc8 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e36\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_2afc3042c05d5410995e839c56233d1b.setIcon(div_icon_9068d4cc98355846eb348e5cbfa4bcc8);
+            
+    
+            var marker_5e3d361a4462613906ca0fac577b3aea = L.marker(
+                [21.8356336, -84.9303755],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_5f9708cac72225af3265843aea5a83de = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e37\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_5e3d361a4462613906ca0fac577b3aea.setIcon(div_icon_5f9708cac72225af3265843aea5a83de);
+            
+    
+            var marker_fef5ad01718f3a5969a1da5da284062c = L.marker(
+                [21.8357377, -84.9304625],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_4ce51e521329cbca8efbf3a159bb92bf = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e38\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_fef5ad01718f3a5969a1da5da284062c.setIcon(div_icon_4ce51e521329cbca8efbf3a159bb92bf);
+            
+    
+            var marker_16823972089745b6f33843b0c00cef45 = L.marker(
+                [21.8356918, -84.930678],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_1e1204d5bcc6d71040fca5379fb3fece = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e39\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_16823972089745b6f33843b0c00cef45.setIcon(div_icon_1e1204d5bcc6d71040fca5379fb3fece);
+            
+    
+            var marker_27074abb49b623c37f66458fe37d8fe3 = L.marker(
+                [21.8357652, -84.9307791],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_8a938c7420df59b8057b56da38fcce60 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e40\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_27074abb49b623c37f66458fe37d8fe3.setIcon(div_icon_8a938c7420df59b8057b56da38fcce60);
+            
+    
+            var marker_e9fb908ea400b2f5178a4fb963eaf5d0 = L.marker(
+                [21.8357833, -84.9308188],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_5931331ab0baacbcdc21ed349ba8cfed = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e41\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_e9fb908ea400b2f5178a4fb963eaf5d0.setIcon(div_icon_5931331ab0baacbcdc21ed349ba8cfed);
+            
+    
+            var marker_cea77d5c0fdfc4161279fff010c1cba4 = L.marker(
+                [21.8357418, -84.9308879],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_8be3ec875b67e633dfd337d9e882f099 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e42\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_cea77d5c0fdfc4161279fff010c1cba4.setIcon(div_icon_8be3ec875b67e633dfd337d9e882f099);
+            
+    
+            var marker_8ba35573c219cf452b831f0890b81797 = L.marker(
+                [21.8357653, -84.930898],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_0f50b15807a5273174768f066d84628a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e43\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_8ba35573c219cf452b831f0890b81797.setIcon(div_icon_0f50b15807a5273174768f066d84628a);
+            
+    
+            var marker_3fa9871b856f2076ae66b43f43a01014 = L.marker(
+                [21.835802, -84.9310797],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_8568a88ae4f8f9eda1818542bd61eb51 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e44\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_3fa9871b856f2076ae66b43f43a01014.setIcon(div_icon_8568a88ae4f8f9eda1818542bd61eb51);
+            
+    
+            var marker_1ca66bca0c15d6d6b6cf2cd2687ac7cf = L.marker(
+                [21.835814, -84.9311091],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_422a075d4312f1080c111479ff255e4c = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e45\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_1ca66bca0c15d6d6b6cf2cd2687ac7cf.setIcon(div_icon_422a075d4312f1080c111479ff255e4c);
+            
+    
+            var marker_b06c0687c92943a6fe3d819b2b4f1e6f = L.marker(
+                [21.8358419, -84.9311727],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_2f3b48572698b3708eea2ec0fe248562 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e46\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_b06c0687c92943a6fe3d819b2b4f1e6f.setIcon(div_icon_2f3b48572698b3708eea2ec0fe248562);
+            
+    
+            var marker_9b0d1bb3dced2c3d53bce8c5118c0e37 = L.marker(
+                [21.8358501, -84.9311955],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_7d9a4076671656fd78347761d1eddbeb = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e47\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_9b0d1bb3dced2c3d53bce8c5118c0e37.setIcon(div_icon_7d9a4076671656fd78347761d1eddbeb);
+            
+    
+            var marker_b12303a0a9dc29ec9eafab7ce9009c7a = L.marker(
+                [21.8357817, -84.9312877],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_8466b92ae26f208e22489f7efc9c8891 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e48\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_b12303a0a9dc29ec9eafab7ce9009c7a.setIcon(div_icon_8466b92ae26f208e22489f7efc9c8891);
+            
+    
+            var marker_4b0a57738edc995854261e40a9b1b604 = L.marker(
+                [21.8358007, -84.9313109],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_75eb5fc8c2a64a5c55c66ff00a135939 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e49\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_4b0a57738edc995854261e40a9b1b604.setIcon(div_icon_75eb5fc8c2a64a5c55c66ff00a135939);
+            
+    
+            var marker_609d427804e4658fe4c3530c403d9d6b = L.marker(
+                [21.8358395, -84.9313421],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_1036ff8128a2dc802fd1748980f782f0 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e50\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_609d427804e4658fe4c3530c403d9d6b.setIcon(div_icon_1036ff8128a2dc802fd1748980f782f0);
+            
+    
+            var marker_25cf43b681aba47406696e59c795f29d = L.marker(
+                [21.8358587, -84.9313512],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_16e48cd756b1f89adef36d9c86258f3b = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e51\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_25cf43b681aba47406696e59c795f29d.setIcon(div_icon_16e48cd756b1f89adef36d9c86258f3b);
+            
+    
+            var marker_cddca10af80a3ee9775de66351be49f0 = L.marker(
+                [21.8359337, -84.9313829],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_652f869e8553e49c01dcbd4b825ebe11 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e52\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_cddca10af80a3ee9775de66351be49f0.setIcon(div_icon_652f869e8553e49c01dcbd4b825ebe11);
+            
+    
+            var marker_9055deff28782c7981137a75bd2dcd18 = L.marker(
+                [21.8359384, -84.9316949],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_d9686b4baec830495d58d1ef9fd80741 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e53\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_9055deff28782c7981137a75bd2dcd18.setIcon(div_icon_d9686b4baec830495d58d1ef9fd80741);
+            
+    
+            var marker_214008e206478da4b255207d2e9ebabf = L.marker(
+                [21.8359508, -84.9317074],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_cc9d5114befdf35de3a70dce5cf9d486 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e54\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_214008e206478da4b255207d2e9ebabf.setIcon(div_icon_cc9d5114befdf35de3a70dce5cf9d486);
+            
+    
+            var marker_340be93e9b14ef54590092660470b74c = L.marker(
+                [21.8360236, -84.9318925],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_79ee54429ecf711bfdda53f472824a1a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e55\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_340be93e9b14ef54590092660470b74c.setIcon(div_icon_79ee54429ecf711bfdda53f472824a1a);
+            
+    
+            var marker_e32685d828f8a4b329001660c17aa3c3 = L.marker(
+                [21.836043, -84.9319832],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_49c121645dba867dcc940358ef0e930e = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e56\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_e32685d828f8a4b329001660c17aa3c3.setIcon(div_icon_49c121645dba867dcc940358ef0e930e);
+            
+    
+            var marker_68a11837ead849e6a6d3977223f0be08 = L.marker(
+                [21.8360664, -84.932045],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_61e816ad9247c5b1374275c4112f03ad = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e57\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_68a11837ead849e6a6d3977223f0be08.setIcon(div_icon_61e816ad9247c5b1374275c4112f03ad);
+            
+    
+            var marker_ee6d9120632a62e4d7d975784121a4ce = L.marker(
+                [21.8358021, -84.931122],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_9e00e5a0c87c26090a3ca2aa3568ee2a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e58\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_ee6d9120632a62e4d7d975784121a4ce.setIcon(div_icon_9e00e5a0c87c26090a3ca2aa3568ee2a);
+            
+    
+            var marker_9a2171a83f19a4ef0cdb306d3a9ec4e8 = L.marker(
+                [21.8360665, -84.9321303],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_b8c14db76531b652efe56b16d320bae9 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e59\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_9a2171a83f19a4ef0cdb306d3a9ec4e8.setIcon(div_icon_b8c14db76531b652efe56b16d320bae9);
+            
+    
+            var marker_df725b9e637154bb5f693fe96cc9231f = L.marker(
+                [21.8360834, -84.9321311],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_bae0cf0211269ffbcb26c28e3bb7ed1f = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e60\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_df725b9e637154bb5f693fe96cc9231f.setIcon(div_icon_bae0cf0211269ffbcb26c28e3bb7ed1f);
+            
+    
+            var marker_0840cd780d084007887651536cd53f03 = L.marker(
+                [21.835759, -84.930788],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_f6bce3383ad693ac69341b03a952b9c7 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e61\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_0840cd780d084007887651536cd53f03.setIcon(div_icon_f6bce3383ad693ac69341b03a952b9c7);
+            
+    
+            var marker_f877d4b802f5fb73ef981715176d7c01 = L.marker(
+                [21.8361204, -84.9320955],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_af23f39bb52cf52d32b4c2d4e0dff9a4 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e62\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_f877d4b802f5fb73ef981715176d7c01.setIcon(div_icon_af23f39bb52cf52d32b4c2d4e0dff9a4);
+            
+    
+            var marker_5fcbe7ad27855c5fa156c3d8c60acfa9 = L.marker(
+                [21.8360697, -84.9321879],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_2d1df296905bd0cd8bc0ae798b1425c6 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e63\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_5fcbe7ad27855c5fa156c3d8c60acfa9.setIcon(div_icon_2d1df296905bd0cd8bc0ae798b1425c6);
+            
+    
+            var marker_86c26bcffa0182f5bdeea40a61bb40fb = L.marker(
+                [21.8361515, -84.9322407],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_67ba42c575a5eb587255d3075bd5852e = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e64\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_86c26bcffa0182f5bdeea40a61bb40fb.setIcon(div_icon_67ba42c575a5eb587255d3075bd5852e);
+            
+    
+            var marker_6890c0445ed11053cbd6e357ba2a8fbd = L.marker(
+                [21.8361958, -84.9323596],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_f41c8edf377188453451973a745dbaa3 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e65\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_6890c0445ed11053cbd6e357ba2a8fbd.setIcon(div_icon_f41c8edf377188453451973a745dbaa3);
+            
+    
+            var marker_8497fb4c3596682303626c346538349a = L.marker(
+                [21.8362946, -84.9325572],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_672e362e50c871e508c0379181a1d886 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e66\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_8497fb4c3596682303626c346538349a.setIcon(div_icon_672e362e50c871e508c0379181a1d886);
+            
+    
+            var marker_f9d8a0a5c6868a2776d9d30e1c40cf28 = L.marker(
+                [21.8362714, -84.9325887],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_ffdeefc4c81c0788e9cca58c2abbbd89 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e67\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_f9d8a0a5c6868a2776d9d30e1c40cf28.setIcon(div_icon_ffdeefc4c81c0788e9cca58c2abbbd89);
+            
+    
+            var marker_c2d230b1cba70c83053271c6d7167c07 = L.marker(
+                [21.8358704, -84.9314065],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_1cb52a07e869075a2f6f1ef0c6d838bb = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e68\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_c2d230b1cba70c83053271c6d7167c07.setIcon(div_icon_1cb52a07e869075a2f6f1ef0c6d838bb);
+            
+    
+            var marker_267a431d66a584100d5b02b61c6edd69 = L.marker(
+                [21.8362734, -84.9327063],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_bd1c5e901a4a426f62a69087e0fc4cbe = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e69\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_267a431d66a584100d5b02b61c6edd69.setIcon(div_icon_bd1c5e901a4a426f62a69087e0fc4cbe);
+            
+    
+            var marker_be0abac8d6c0b7cdc8e7dd503d6d6e75 = L.marker(
+                [21.8363675, -84.9327332],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_1d5d15583d2dab6b46c2372875f956a2 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e70\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_be0abac8d6c0b7cdc8e7dd503d6d6e75.setIcon(div_icon_1d5d15583d2dab6b46c2372875f956a2);
+            
+    
+            var marker_6b5aa2f7acc08c18bbb1d152b4feb21d = L.marker(
+                [21.8363755, -84.9326533],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_595548c3d7484abe3ff16738fa43064c = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e71\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_6b5aa2f7acc08c18bbb1d152b4feb21d.setIcon(div_icon_595548c3d7484abe3ff16738fa43064c);
+            
+    
+            var marker_2dc72cf2d06edca3869d73dc657ddb5c = L.marker(
+                [21.8363255, -84.9326669],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_7b8282f40914e7e0d57ea78556b980be = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e72\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_2dc72cf2d06edca3869d73dc657ddb5c.setIcon(div_icon_7b8282f40914e7e0d57ea78556b980be);
+            
+    
+            var marker_1eea668e9cd34c19dd8d9e49af20bf62 = L.marker(
+                [21.8365257, -84.9329997],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_04d6a51db0a0a1724fa0300d2857cb99 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e73\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_1eea668e9cd34c19dd8d9e49af20bf62.setIcon(div_icon_04d6a51db0a0a1724fa0300d2857cb99);
+            
+    
+            var marker_d5c52d49cfc9c9e48dba964d0a8ec0f8 = L.marker(
+                [21.8365028, -84.932997],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_6e7f270735d7a1817f11b6d9c010b12c = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e74\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_d5c52d49cfc9c9e48dba964d0a8ec0f8.setIcon(div_icon_6e7f270735d7a1817f11b6d9c010b12c);
+            
+    
+            var marker_acc549d297d517b577e873cfbacad373 = L.marker(
+                [21.8366161, -84.9332974],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_c3efdfcfa9611cc0100febc9d7bf2433 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e75\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_acc549d297d517b577e873cfbacad373.setIcon(div_icon_c3efdfcfa9611cc0100febc9d7bf2433);
+            
+    
+            var marker_47dd2be07bae0d9458e9653cd5f17641 = L.marker(
+                [21.8352129, -84.9287239],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_dd04b3451495d1a729ee5abc09d25d78 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e76\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_47dd2be07bae0d9458e9653cd5f17641.setIcon(div_icon_dd04b3451495d1a729ee5abc09d25d78);
+            
+    
+            var marker_72ac1c37e98ca18e4998d556290c7a4a = L.marker(
+                [21.8366074, -84.9333434],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_f00bb6e5a1dba864aa33b7b36e09b684 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e77\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_72ac1c37e98ca18e4998d556290c7a4a.setIcon(div_icon_f00bb6e5a1dba864aa33b7b36e09b684);
+            
+    
+            var marker_49c7c72d8c2a5ef1f2d99740f1554f00 = L.marker(
+                [21.8365409, -84.933343],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_87946cbbdb51f7748297f9b8f389ec85 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e78\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_49c7c72d8c2a5ef1f2d99740f1554f00.setIcon(div_icon_87946cbbdb51f7748297f9b8f389ec85);
+            
+    
+            var marker_86e3135619c2eea1cb7719df3e2f1bcf = L.marker(
+                [21.8364249, -84.932892],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_a91aacb0328686c7d51f3e79a07f6475 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e79\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_86e3135619c2eea1cb7719df3e2f1bcf.setIcon(div_icon_a91aacb0328686c7d51f3e79a07f6475);
+            
+    
+            var marker_26536cb830d64bc96ff463932e761d66 = L.marker(
+                [21.8363703, -84.9331388],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_f4687f1f8715b389fe58f27e484ceec7 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e80\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_26536cb830d64bc96ff463932e761d66.setIcon(div_icon_f4687f1f8715b389fe58f27e484ceec7);
+            
+    
+            var marker_75bf4ec33d8e7d2f9a4ed7fb9a216a75 = L.marker(
+                [21.83286, -84.9225541],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_6db86ece01092f4255c63af6c5198ad9 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e81\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_75bf4ec33d8e7d2f9a4ed7fb9a216a75.setIcon(div_icon_6db86ece01092f4255c63af6c5198ad9);
+            
+    
+            var marker_c3865f97baec6472564c848e0e9687a4 = L.marker(
+                [21.8327702, -84.9224025],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_da1b2110d807f10d181eab056011d09b = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e82\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_c3865f97baec6472564c848e0e9687a4.setIcon(div_icon_da1b2110d807f10d181eab056011d09b);
+            
+    
+            var marker_e02d02e6a00c3cbf50705b99ad49c788 = L.marker(
+                [21.8354185, -84.9292585],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_249010150a24afc960773b3edee73f74 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e83\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_e02d02e6a00c3cbf50705b99ad49c788.setIcon(div_icon_249010150a24afc960773b3edee73f74);
+            
+    
+            var marker_af63b265315cae3e3ef780f6841a2dd1 = L.marker(
+                [21.835905, -84.9318403],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_0221f8f3693a3f31713ad43b652c3151 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e84\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_af63b265315cae3e3ef780f6841a2dd1.setIcon(div_icon_0221f8f3693a3f31713ad43b652c3151);
+            
+    
+            var marker_5ef97df390b25fcd21022cdd8efb017d = L.marker(
+                [21.8348322, -84.927064],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_f1d7447089ca32249e6787dc8979de93 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e85\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_5ef97df390b25fcd21022cdd8efb017d.setIcon(div_icon_f1d7447089ca32249e6787dc8979de93);
+            
+    
+            var marker_8f0fa5925f512a78b154080f9e5c6579 = L.marker(
+                [21.8365515, -84.9332416],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_cbfd5054bc42f293a21faf71d9843cd0 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e86\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_8f0fa5925f512a78b154080f9e5c6579.setIcon(div_icon_cbfd5054bc42f293a21faf71d9843cd0);
+            
+    
+            var marker_146ef3fff695ebf9a0f35490a8075d3f = L.marker(
+                [21.8362209, -84.9325265],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_368e32e30413bc124743863b612bd753 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e87\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_146ef3fff695ebf9a0f35490a8075d3f.setIcon(div_icon_368e32e30413bc124743863b612bd753);
+            
+    
+            var marker_bd670ebc039b45904742ff7fef596327 = L.marker(
+                [21.8336182, -84.9239011],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_9e1dd444c3860b501eda0d9c26eda753 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e88\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_bd670ebc039b45904742ff7fef596327.setIcon(div_icon_9e1dd444c3860b501eda0d9c26eda753);
+            
+    
+            var marker_4003ff1798c6df2a6daabe5d5506924b = L.marker(
+                [21.8327786, -84.9223965],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_4f9eebc2518e2706635c7ba9385cac01 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e89\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_4003ff1798c6df2a6daabe5d5506924b.setIcon(div_icon_4f9eebc2518e2706635c7ba9385cac01);
+            
+    
+            var marker_24769940116c2f89603359a521aa8fb6 = L.marker(
+                [21.8361158, -84.9321179],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_5cbd51ba8f2bd47aaa524abf2e4c072c = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e90\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_24769940116c2f89603359a521aa8fb6.setIcon(div_icon_5cbd51ba8f2bd47aaa524abf2e4c072c);
+            
+    
+            var marker_f9c266a63d4df44d0e682e2b78639028 = L.marker(
+                [21.8351566, -84.9286218],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_e72782593ed2aa9b2aed814279eedb51 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e91\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_f9c266a63d4df44d0e682e2b78639028.setIcon(div_icon_e72782593ed2aa9b2aed814279eedb51);
+            
+    
+            var marker_f7d447aca1aaadfcc559f896c1c27f21 = L.marker(
+                [21.8360911, -84.9323965],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_0cbe2cc491d124081bf695008a11c8b3 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e92\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_f7d447aca1aaadfcc559f896c1c27f21.setIcon(div_icon_0cbe2cc491d124081bf695008a11c8b3);
+            
+    
+            var marker_9fb3b054b2f5612297fc7a8fcf88f67a = L.marker(
+                [21.8349341, -84.92772],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_1f42f3aeb58838cb5ffe31e67c00f0e7 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: blue; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e93\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_9fb3b054b2f5612297fc7a8fcf88f67a.setIcon(div_icon_1f42f3aeb58838cb5ffe31e67c00f0e7);
+            
+    
+            var marker_3df1e6dde0294e49e37880f8a368469e = L.marker(
+                [21.82304, -84.87185],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_8ca90a825cc96260952048867fa9cb26 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e01\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_3df1e6dde0294e49e37880f8a368469e.setIcon(div_icon_8ca90a825cc96260952048867fa9cb26);
+            
+    
+            var marker_7afcf7ef2c4af78e9207e2cc10ab2e7c = L.marker(
+                [21.8231, -84.87172],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_1ecef3b48dc3e365342614199aa4f851 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e02\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_7afcf7ef2c4af78e9207e2cc10ab2e7c.setIcon(div_icon_1ecef3b48dc3e365342614199aa4f851);
+            
+    
+            var marker_a3016641756c5b2da5078d79013e4604 = L.marker(
+                [21.8231, -84.87231],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_c3f19c2e894f3ac577d23e1e3e0b42b8 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e03\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_a3016641756c5b2da5078d79013e4604.setIcon(div_icon_c3f19c2e894f3ac577d23e1e3e0b42b8);
+            
+    
+            var marker_9927622ef7aefdd8cd3019c42061ecdb = L.marker(
+                [21.82312, -84.87169],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_63d6b1af7c2d7b7e5a9e1a1df44abb96 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e04\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_9927622ef7aefdd8cd3019c42061ecdb.setIcon(div_icon_63d6b1af7c2d7b7e5a9e1a1df44abb96);
+            
+    
+            var marker_977922cb34d1fa3abc1484cba280d429 = L.marker(
+                [21.82297, -84.87127],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_15bf0946bb676dcac361c31970814f00 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e05\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_977922cb34d1fa3abc1484cba280d429.setIcon(div_icon_15bf0946bb676dcac361c31970814f00);
+            
+    
+            var marker_6fac9e0123eb064e91a09b2e927188e4 = L.marker(
+                [21.82302, -84.87135],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_ee8126f8f4c98e3ae45843e8125776bd = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e06\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_6fac9e0123eb064e91a09b2e927188e4.setIcon(div_icon_ee8126f8f4c98e3ae45843e8125776bd);
+            
+    
+            var marker_cc19a1bb5e1b78fcc254699843a4411e = L.marker(
+                [21.82302, -84.87164],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_349508df07e3ac755aea592016261936 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e07\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_cc19a1bb5e1b78fcc254699843a4411e.setIcon(div_icon_349508df07e3ac755aea592016261936);
+            
+    
+            var marker_f8a492a8aa91c72ab48221aeae785b0d = L.marker(
+                [21.823024, -84.8715522],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_d3816a871f5681d20838cf0072a38e40 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e28\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_f8a492a8aa91c72ab48221aeae785b0d.setIcon(div_icon_d3816a871f5681d20838cf0072a38e40);
+            
+    
+            var marker_a892d0c1405067911f3c271064655ce4 = L.marker(
+                [21.8230152, -84.8712706],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_a6058294f2feac8601bda8a3e9faca3f = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e32\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_a892d0c1405067911f3c271064655ce4.setIcon(div_icon_a6058294f2feac8601bda8a3e9faca3f);
+            
+    
+            var marker_b2e74073f147a96ab6d78773644c02f0 = L.marker(
+                [21.8229757, -84.8714721],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_8846d77516648332f6a376fd661d5e9c = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e33\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_b2e74073f147a96ab6d78773644c02f0.setIcon(div_icon_8846d77516648332f6a376fd661d5e9c);
+            
+    
+            var marker_852b110d3099efede85e3e567edb0bc9 = L.marker(
+                [21.8230609, -84.8715625],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_d0e5a0fb0838f4076d869f8f518f46f7 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e34\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_852b110d3099efede85e3e567edb0bc9.setIcon(div_icon_d0e5a0fb0838f4076d869f8f518f46f7);
+            
+    
+            var marker_5bb12413d4a1a41ac94563aa6c87b975 = L.marker(
+                [21.823088, -84.8715781],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_62afa30532e09b26566d1ba68bf62ea3 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e35\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_5bb12413d4a1a41ac94563aa6c87b975.setIcon(div_icon_62afa30532e09b26566d1ba68bf62ea3);
+            
+    
+            var marker_f316bdd6c650379216aca988cf3a9143 = L.marker(
+                [21.8229392, -84.8715083],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_73ca302d38ac716ce595379958f0e1b7 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e36\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_f316bdd6c650379216aca988cf3a9143.setIcon(div_icon_73ca302d38ac716ce595379958f0e1b7);
+            
+    
+            var marker_310fe43681632be2cb2ef73c223ce6f1 = L.marker(
+                [21.8228804, -84.8711328],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_5f4a12f8edc3b76fb6b64b133fc7ecef = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e39\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_310fe43681632be2cb2ef73c223ce6f1.setIcon(div_icon_5f4a12f8edc3b76fb6b64b133fc7ecef);
+            
+    
+            var marker_e0c2f1dbbc5568c1a9e12ba710535625 = L.marker(
+                [21.8230701, -84.8714901],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_4b52607bff8006403d010567e878c081 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e41\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_e0c2f1dbbc5568c1a9e12ba710535625.setIcon(div_icon_4b52607bff8006403d010567e878c081);
+            
+    
+            var marker_01af9b8c0a09ec0e74ddae4c8dd16b5c = L.marker(
+                [21.8229846, -84.8712349],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_fb67278eb5d9b7bc98841003c2e05a40 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e42\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_01af9b8c0a09ec0e74ddae4c8dd16b5c.setIcon(div_icon_fb67278eb5d9b7bc98841003c2e05a40);
+            
+    
+            var marker_87b6b9af1ed68294c9e34db8fa3d5c6f = L.marker(
+                [21.8230334, -84.87158],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_e21c48ecc02d1bf98261c4fbbc31f481 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e43\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_87b6b9af1ed68294c9e34db8fa3d5c6f.setIcon(div_icon_e21c48ecc02d1bf98261c4fbbc31f481);
+            
+    
+            var marker_d6911dadfde73635188656e3af424b9f = L.marker(
+                [21.8230406, -84.8715721],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_f7926000522ad6225cdc9782872355f2 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e44\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_d6911dadfde73635188656e3af424b9f.setIcon(div_icon_f7926000522ad6225cdc9782872355f2);
+            
+    
+            var marker_b4d1504a56c67e18e9fa39736f5634cb = L.marker(
+                [21.8228664, -84.8710919],
+                {
+}
+            ).addTo(feature_group_a4539806b4d84a1537b67dca5727028b);
+        
+    
+            var div_icon_bafd695ee0520ae05a98dcaa310c78eb = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: red; background-color: rgba(255, 255, 255, 0.7); padding: 2px 4px; border-radius: 3px;\"\u003e52\u003c/div\u003e",
+  "iconSize": [20, 36],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+        
+    
+                marker_b4d1504a56c67e18e9fa39736f5634cb.setIcon(div_icon_bafd695ee0520ae05a98dcaa310c78eb);
+            
+    
+            feature_group_a4539806b4d84a1537b67dca5727028b.addTo(map_85b86c94533544cb22d54da25a51dda7);
+        
+    
+            var mouse_position_7bf27bad92950fb1e7dd65bc80565330 = new L.Control.MousePosition(
+                {
+  "position": "topright",
+  "separator": " , ",
+  "emptyString": "Unavailable",
+  "lngFirst": false,
+  "numDigits": 5,
+  "prefix": "Coordenadas:",
+}
+            );
+            mouse_position_7bf27bad92950fb1e7dd65bc80565330.options["latFormatter"] =
+                function(num) {return L.Util.formatNum(num, 5);};;
+            mouse_position_7bf27bad92950fb1e7dd65bc80565330.options["lngFormatter"] =
+                function(num) {return L.Util.formatNum(num, 5);};;
+            map_85b86c94533544cb22d54da25a51dda7.addControl(mouse_position_7bf27bad92950fb1e7dd65bc80565330);
+        
+    
+            var layer_control_6152ff5ac297b2a0a118eb1264b71a68_layers = {
+                base_layers : {
+                    "OpenStreetMap" : tile_layer_c2b6639814091378fa2e3eec79fe819a,
+                    "Vista Satelital" : tile_layer_727686e546267802a82575f38e2a84f8,
+                    "OpenTopoMap" : tile_layer_f23fed951b8a2d05747ff290461c7981,
+                },
+                overlays :  {
+                    "Mapa de calor (por huevos)" : feature_group_55fa314f6d5b287ac3dd5300c33fe9b7,
+                    "Nidos" : feature_group_a4539806b4d84a1537b67dca5727028b,
+                },
+            };
+            let layer_control_6152ff5ac297b2a0a118eb1264b71a68 = L.control.layers(
+                layer_control_6152ff5ac297b2a0a118eb1264b71a68_layers.base_layers,
+                layer_control_6152ff5ac297b2a0a118eb1264b71a68_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_85b86c94533544cb22d54da25a51dda7);
+
+        
+</script>
+</html></div>
+    <div id="lista"><h2>Lista de nidos por playas</h2><ul id="lista-nidos" style="list-style:none; padding-left:0;"><li id="nido-0" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 01</b>: 13/8, sin fecha. Nido en la zona B al sol. Hay una loma de arena en el medio. Hay huevos de cáscaras crujientes. No hay moscas. No hay huellas de animales.</li><li id="nido-1" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 02</b>: 13/8, sin fecha. Nido ubicado en la zona B bajo el sol a 2 m de la playa. Se ven cáscaras de huevo crujientes. No hay moscas</li><li id="nido-2" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 03</b>: 13/8, sin fecha. Nido ubicado en el borde de la zona B con C, bajo el sol. Hay cáscaras de huevo ladera E. No hay huellas. No hay moscas.</li><li id="nido-3" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 04</b>: 13/8, sin fecha. Nido al sol en la zona B cercano al borde C. Palos y hojas</li><li id="nido-4" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 05</b>: 13/8, sin fecha. Se observan huellas de tortuga entrando y saliendo. Nido ubicado dentro de la zona C a la sombra de los arboles. Se ve bien. No hay huellas de animales. No hay cáscaras de huevo. No hay moscas. Está ok</li><li id="nido-5" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 06</b>: 13/8 , sin fecha. Ubicado en zona B al sol rodeado de arena. Hay cáscaras de huevo crujientes ladera S. No hay moscas. No hay huellas</li><li id="nido-6" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 07</b>: </li><li id="nido-7" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 08</b>: 13/8, sin fecha. Nido dentro de zona C bajo raíces de árbol entró por detrás. Se ve bien. No hay moscas, No hay cáscaras de huevo.</li><li id="nido-8" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 09</b>: 13/8, Sin fecha, nido dentro de zona C al sol. Cáscaras de huevos crujientes en el centro con hojas.</li><li id="nido-9" style="padding:5px; cursor:pointer;"><b>Playa los Cayuelos - Nido 10</b>: 13/8, Nido al sol en el borde con la zona C. Se ve bien. No hay cáscaras de huevo, no hay moscas, no hay huellas.</li><li id="nido-10" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 01</b>: 11/08, sin fecha de registro,<br>13/08, se mantiene igual. Hay huellas de cangrejos que pasa.<br>15/8, Evidencias de que el puerco grande escarbo profundo y saco los huevos. cáscaras frescas ladera W. y SE. hay moscas.<br>16/8, 7:14, no ha sido visitado. cáscaras húmedas. cueva de cangrejos ladera W</li><li id="nido-11" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 02</b>: 11/08 , sin fecha de registro, nido ubicado en medio de la zona B, al sol. Se observa huellas de animales dentro del nido, junto a cáscaras de huevos. arena removida fresca a todo alrededor. Moscas. No fue inicialmente depredado anoche.<br>12/8 se observa huella de un cerdo que volvió a abrir el nido. cáscaras de huevo. huellas de cangrejos. moscas.<br>13/8 El cerdo volvió a abrir el nido antes de las 2:00 am. hay cáscaras de huevo, moscas y huellas de cangrejo. se tapa con arena el nido de nuevo.<br>16/8, Huellas de cerdo que llega desde zona C desde el W. Escarba solo un poco y sigue para el E. se procede a volver a tapar .</li><li id="nido-12" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 03</b>: 11/8, sin fecha de registro, nido ubicado en arena zona B, al Sol.<br>12/08 Ayer este nido estaba bien. hoy amaneció con huellas de un cerdo que escarbo. huellas de cangrejo. no hay cáscaras. se procede a volver a tapar<br>13/8 amaneció bien.<br>16/8, amaneció bien.</li><li id="nido-13" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 04</b>: 11/08 , sin fecha de registro, nido ubicado en medio de la zona B. evidencias de que hay un cerdo pequeño escarbando los nidos por la noche. En este nido no  hay cáscaras.<br>12/08 siguen escarbando tierra fresca en el nido. huellas de cangrejo que entran y salen no hay cáscaras de huevo.<br>13/8 El cerdo entró, escarbo ligeramente y se fue. se procede a tapar el nido con arena enmarcándolo con piedras<br>16/8, se mantiene igual, no fue visitado<br></li><li id="nido-14" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 05</b>: 11/08, sin fecha de registro, ubicado en arena en medio de la zona B. nido al lado del 06 con hojas<br>12/08 huellas de cangrejos por todos lados<br>13/08, se mantiene igual que ayer. + el cerdo bajo, paso y siguió para el nido 6 donde escarbo.<br>16/8, se mantiene igual.</li><li id="nido-15" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 06</b>: 11/08, sin fecha de registro, nido ubicado en arena de. ladera en inicio de zonas B.Hay cáscaras de huevos encima de la ladera W y hojas en el nido.<br>13/8 El cerdo entró al nido escarbo,derrumbando paredes. no hay moscas ni cáscaras de huevos frescas solo la de ayer. se procede a tapar el nido con arena.<br>16/8 Se mantiene igual</li><li id="nido-16" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 07</b>: 11/08, sin fecha de registro, ubicado en el borde piedra arena zona B. hay cáscaras de huevos en el fondo y ladera EY W.Sin huellas frescas de animales<br>12/08 en idénticas condiciones que ayer.<br>13/08, no fue visitado por los animales. hay moscas.<br>16/8, se mantiene igual.</li><li id="nido-17" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 08</b>: 11/08, sin fecha de registro, ubicado en inicio de la zona C bajo el sol y arena. Hay cáscaras de huevos ladera S y huellas de cangrejos. No hay moscas.<br>12/08, Huellas de cangrejo y del cerdo. el cerdo escarbo está madrugada. hay cáscaras de huevo y moscas.<br>15/8, El cerdo grande estuvo escarbando, no hay moscas<br>16/8 una cueva de cangrejos al centro hacia el E. huellas de cangrejo</li><li id="nido-18" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 09</b>: 11/08 ,sin fecha de registro, ubicado en arena medio de la zona B. hay cáscaras de huevos ladera W  y huellas de cangrejos, no hay moscas.<br>12/08, idem al día anterior.<br>13/08 no fue visitado por los animales<br>16/8 , se mantiene igual</li><li id="nido-19" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 10</b>: 11/08, hay cáscaras de huevos, si huellas, sin moscas<br>12/08 idem. al día anterior.<br>13/08, no fue visitado por los cerdos. hay huellas de cangrejos, hojas. no hay moscas.<br>16/8 se mantiene igual</li><li id="nido-20" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 11</b>: 11/08, sin fecha de registro, ubicado dentro de zona C, al sol. Hay cáscaras de huevos en el centro y ladera E y S. sin huellas, hay hojas<br>12/08, iden al día anterior + hoy hay huellas de cerdo pequeño y moscas<br>13/08 no fue visitado por el cerdo. hay una cueva de cangrejos ladera W<br>16/8 no fue visitado. no hay huellas de cangrejos. cueva de cangrejos sin actividad.</li><li id="nido-21" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 12</b>: 11/08, sin fecha de registro,ubicado en borde de la zona C, en arena al sol .no hay cáscaras de huevos, no hay huellas. Hay hojas.<br>12/08, se mantiene igual que el día anterior<br>13/08 Se mantiene igual.<br>16/8, Se mantiene igual</li><li id="nido-22" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 13</b>: 11/8, sin fecha de registro,ubicado en zona B en frontera con C. no hay cáscaras de huevos, no hay huellas, hay hojas y palos<br>12/8 idem al día anterior.<br>13/8, se mantiene igual<br>16/8 Anoche entró una tortuga antes de las 2 de la mañana. hay rastro que pasa por el nido. escarba y encuentra piedras grandes. sigue de más arriba zona C donde se ve actividad de varios intentos de nidos pero no se ve claro el lugar exacto. Sale al mar.<br>17/8, Evidencias de que el cerdo grande estuvo escarbando profundo en la parte de la loma y encontró los huevos. hay cáscaras frescas en la ladera W. se procede a tapar el hueco con arena y enmarcar con piedras.</li><li id="nido-23" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 14</b>: 11/08, sin fecha de registro, zona B, con cáscaras de huevos, con cuevas de cangrejos<br>12/08, idem al anterior + hay huellas de cangrejo, no hay moscas<br>13/8 se mantiene igual+2 cuevas de cangrejos ladera W</li><li id="nido-24" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 15</b>: 11/8,  sin fecha de registro, dentro de zona C al sol. con hojas, hay cáscaras de huevo<br>12/8, evidencias de que el cerdo estuvo escarbando, no hay moscas.<br>16/8 hay una cueva de cangrejos</li><li id="nido-25" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 16</b>: 11/08,  sin fecha de registro, en arena zona B, sin cáscaras de huevos.<br>12/08, idem al día anterior + el cerdo se metió en el nido y siguió de largo. hay 4 huellas de cangrejos que entran y salen del nido desde zona C para zona B<br>13/8 , se mantiene igual. no fue visitado por animales</li><li id="nido-26" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 17</b>: 11/08, sin fecha de registro, en frontera zona C, al sol.con hojas<br>13/8, se mantiene igual. no ha sido visitado por animales.</li><li id="nido-27" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 18</b>: 11/8, sin fecha de registro,<br>12/8, Evidencias de que un cerdo escarbo. entró escarbo y bajo para el 40 donde siguió de largo.<br>18/8 se mantiene igual</li><li id="nido-28" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 19</b>: 11/8, sin fecha de registro, a la Sombra en frontera zona c. hay cáscaras de huevos, con hojas , sin huellas<br>12/08, idem al día anterior + huellas de cangrejos por todos lados entran y salen.<br>13/8 se ve bien, con hojas y sin visita de cerdo.<br>15/8, el cerdo grande estuvo escarbando. no hay cáscaras, no hay moscas, no hay huellas de cangrejos<br>16/8 Huellas de cangrejos</li><li id="nido-29" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 20</b>: 11/8, sin fecha de registro, en arena en medio de zonas B. con hojas y un caracol, es un nido a la sombra de árboles del farallón zona C<br>13/8, se ve bien + el pomo plástico de la baliza lo tumbo un cangrejo. huellas de cangrejos ladera N. se coloca el pomo .</li><li id="nido-30" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 21</b>: 11/8, sin fecha de registro, Nido a la sombra de árboles farallón zona C. Hay cáscaras de huevos ladera S, 1 cueva de cangrejo ladera N.<br>12/08, hay evidencias que el cerdo se puso a escabar. no hay moscas. el cerdo escabo y siguió hacia el este.<br>13/8 El cangrejo del N cerró su cueva, el nido se mantiene igual</li><li id="nido-31" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 22</b>: 11/8, sin fecha de registro, con hojas, con huellas de cangrejos y del cerdo.<br>12/8, idem al día anterior + el cerdo estuvo escabando  por fuera del nido. hay moscas donde escabo y una cáscara.</li><li id="nido-32" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 23</b>: 11/8, sin fecha de registro, hay hojas, no hay huellas ni cáscaras de huevo<br>12/8, idem al día anterior + el cerdo paso por el lado y siguió.</li><li id="nido-33" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 24</b>: 11/8, sin fecha de registro, nido a la sombra de los árboles farallón zona C, con hojas<br>12/08, idem al día anterior + el cerdo paso por el lado<br>13/8,  se ve bien. no fue visitado.</li><li id="nido-34" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 25</b>: 11/8, sin fecha de registro, Nido a la sombra de los arboles farallón zona C, con hojas, con cuevas de cangrejos<br>12/8, evidencias de que el cerdo estuvo escarbando profundo. hay moscas no hay cáscaras<br>13/8 , hay cáscaras de huevo en el fondo y ladera S Hay moscas,  hay huellas de cerdo. tierra removida. se procede a tapar con arena y enmarcar con frontera de piedra</li><li id="nido-35" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 26</b>: 11/8, sin fecha de registro, Nido en la mitad de la zona B, en la arena bajo el Sol. hay cáscaras de huevos, con hojas con huellas, sin moscas<br>12/8, igual al día anterior.<br>13/8, se mantiene igual. las cáscaras de huevo empiezan a ponerse crujientes pero aun son flexibles.</li><li id="nido-36" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 27</b>: 11/8, sin fecha de registro, nido cercano 2m al borde de los sargazos zona B, Soleado en arena. con cueva de cangrejos ladera N. arena por cangrejos removida por los cangrejos al abrir las cuevas. Fresca de anoche.<br>12/8, huellas del cerdo escarbando fuera del nido., no hay moscas.<br>13/08, no fue visitado. hay una cueva de cangrejos abierta sin rastro al N.</li><li id="nido-37" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 28</b>: 11/8  sin fecha de registro, nido a 3 m del borde sargazo zona B, soleado en arena. con cáscaras de huevos, cuevas de cangrejos<br>12/8, evidencias de que el cerdo estuvo escarbando el nido. hay cáscaras de huevo suaves dentro y fuera, hay moscas<br>13/8 no fue visitado por el cerdo. hay cuevas de cangrejos al E y en el fondo.</li><li id="nido-38" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 29</b>: 11/8, sin fecha de registro, nido encima de la zona C de arena al sol y sombra.hay cáscaras de huevo, huellas de cerdo, huellas de cangrejo, no hay moscas.<br>12/8, hay evidencias de que el cerdo estuvo por aquí, no hay moscas<br>13/8 10:45 hay evidencias de que cerdo estuvo . no hay moscas ni cáscaras. se procede a tapar.</li><li id="nido-39" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 30</b>: 11/8, sin fecha de registro, nido en zona B. sobre la  la pendiente de arena que sube farrallon zona C, on hojas, huellas de cangrejos<br>12/8, idem al día anterior<br>13/08 se mantiene igual</li><li id="nido-40" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 31</b>: 11/8, sin fecha de registro, Nido en el medio de la Zona B. hay hojas<br>12/8, hay hojas en el fondo y en la ladera S que  colinda con el nido depredador 28 hay cáscaras de huevo que cayeron.<br>13/8, no fue visitado. las cáscaras ladera S son flexible no fragmentan al apretarlas. no hay moscas.</li><li id="nido-41" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 32</b>: 11/8, sin fecha de registro, en frontera Zona C soleado, hay cáscaras de huevos.<br>12/8, Evidencias de que el cero estuvo escarbando. huellas de cangrejos.</li><li id="nido-42" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 33</b>: 11/8,  sin fecha de registro, ok</li><li id="nido-43" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 34</b>: 11/8, sin fecha de registro, hay cáscaras de huevo</li><li id="nido-44" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 35</b>: 11/8,  sin fecha de registro, en borde frontera zona C. hay cáscaras de huevo<br>12/8, Evidencias de que el cerdo estuvo escarbando, no hay moscas.</li><li id="nido-45" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 36</b>: 11/8,  sin fecha de registro, en frontera zona c. con hojas <br>12/8, idem al día anterior</li><li id="nido-46" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 37</b>: 11/8, sin fecha de registro,  en medio de zonas B con cáscaras de huevo<br>12/8, el puerco escarbo.<br>18/8 el cerdo escarbo. cueva de cangrejos. se vuelve a tapar.</li><li id="nido-47" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 38</b>: 11/8,sin fecha de registro, en frontera zona c,, sin cáscaras de huevos,  El puerco escarbo<br>12/8, evidencias de que el puerco escarbo<br>15/8, evidencias de que el puerco escarbo, hay cáscaras de huevo, moscas cantidad al parecer llegó al nido. se procede a tapar<br>16/8, se mantiene igual no fue visitado.</li><li id="nido-48" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 39</b>: 11/08/2025, huellas de anoche del rastro de una tortuga entrando y saliendo del lugar. No hay nidos. Se ven las huellas de dos puercos superpuestas con las de la tortuga. Pudo haber pelea.<br>12/8, noy huellas , no hay nada. al parecer no hay nidos.</li><li id="nido-49" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 40</b>: 11/7, sin fecha de registro, Evidencia de que hay un puerco escarbando los nidos, no hay cáscaras de huevos, solo huellas del puerco escarbando<br>12/8, las huellas de un puerco pequeño entran y salen, no hay moscas, no escarbo<br>18/8 se mantiene igual no fue visitado</li><li id="nido-50" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 41</b>: 11/8, sin fecha de registro, hay cáscaras de huevos, hay huellas de cangrejos, hay huellas de puerco<br>12/8, hay huellas de puerco escarbando profundo, no hay moscas.<br>15/8 Hay huella del cerdo grande escarbando profundo. se procede a tapar. hay huellas de tortuga</li><li id="nido-51" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 42</b>: 11/8, sin fecha de registro, hay cáscaras de huevos a todo alrededor, huellas de cangrejos, sin moscas<br>12/8, se mantiene igual que el día anterior. no hay huellas frescas<br>15/8, Los cerdos pequeños pasaron. por fuera. el cerdo grande escarbo.<br>18/8 una  ueva de cangrejos en ladera norte al fondo.</li><li id="nido-52" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 43</b>: 11/8, sin fecha de registro, con palos y hojas<br>12/8, Se mantiene igual que el día anterior. no hay huellas frescas<br>18/8 se mantiene igual</li><li id="nido-53" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 44</b>: 11/8, sin fecha de registro, hay cáscaras de huevo<br>12/8, hay huellas frescas de que el cerdo estuvo escarbando. no hay moscas<br>15/7 se mantiene igual.vlos cerdos pequeños pasaron por fuera</li><li id="nido-54" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 45</b>: 11/8, sin fecha de registro, huellas de cangrejo<br>12/8, El cerdo paso por el lado.<br>15/8, Los cerdos pequeños pasaron. y siguieron</li><li id="nido-55" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 46</b>: 11/8, sin fecha de registro, piedras caracoles, planta bejuco verde<br>12/8, se mantiene. igual que el día anterior</li><li id="nido-56" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 47</b>: 11/8 ,sin fecha de registro, huellas de cangrejos<br>12/8, El cerdo paso por el interior, tumbo el palo de la baliza y el pomo. no hay moscas, no hay cáscaras de huevo<br>18/8 El cerdo paso, escarbo profundo. hay cáscaras de huevo ladera W, huellas de cangrejos. se procede a tapar.</li><li id="nido-57" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 48</b>: 11/8, sin fecha de registro,<br>12/8, los cerdos se metieron en el nido, estuvieron escarbando. no hay moscas. tumbaron el pomo de la baliza<br>15/8, Se mantiene igual.</li><li id="nido-58" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 49</b>: 11/8, sin fecha con cáscaras de huevos, huellas de cangrejos y cuevas, sin mosca<br>12/8, El cero grande estuvo escarbando profundo, no hay moscas.<br>15/8, los cerdos pequeños pasaron por fuera y siguieron.</li><li id="nido-59" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 50</b>: 11/8, sin fecha de registro, con hojas<br>12/8, se mantiene igual</li><li id="nido-60" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 51</b>: 11/8, sin fecha de registro,en frontera de zona C al sol. hay cáscaras de huevos, hay huellas de cangrejos, sin moscas<br>12/8, un cerdo entró y salió del nido. se puso a escarbar por el lado. no hay moscas.<br>15/8 El cerdo paso y siguio</li><li id="nido-61" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 52</b>: 11/8,  sin fecha de registro, hay cáscaras de huevos, huellas de cangrejos, sin moscas<br>12/8, el cerdo se puso a escarbar profundo por la parte la ladera sur del nido.cerdo pequeño. no hay moscas</li><li id="nido-62" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 53</b>: 11/8, sin fecha de registro, hay cáscaras de huevos, huellas de cangrejos, sin moscas<br>12/8, se mantiene igual.<br>15/8, huellas de cangrejos que entran y salen.</li><li id="nido-63" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 54</b>: 11/8, sin fechas, hay un rastro de tortuga borrado<br>12/8 se mantiene igual<br>15/8,  mantiene igual. el rastro de la tortuga ya no se ve.</li><li id="nido-64" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 55</b>: 11/8, sin fecha de registro, hay cáscaras de huevos, cuevas de cangrejos, sin moscas<br>12/8, se mantiene igual que ayer<br>15/8, se mantiene igual cáscaras de huevo flexibles por todos lados. están húmedas por la lluvia.<br>18/8, El cerdo paso y se puso a escarbar, no encontró el nido. huellas de cangrejos después del cerdo. se procede a tapar.</li><li id="nido-65" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 56</b>: 11/8, sin fecha de registro, hay cáscaras de huevo<br>12/8, se mantiene igual<br>15/8, 7:39 casa ras de huevos mojadas sin flexibles. se mantiene igual<br>18/8 El cerdo se puso a escarbar profundo, no encontró el nido. siguió.se procede a volver a tapar.</li><li id="nido-66" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 57</b>: 11/8, sin fecha de registro, huellas de cangrejo<br>12/8, se mantiene igual<br>18/8 se mantiene igual</li><li id="nido-67" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 58</b>: 11/8, sin fecha de registro, huellas de cangrejos<br>12/8, el cerdo pequeño paso por el lado</li><li id="nido-68" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 59</b>: 11/8, sin fecha de registro, evidencia de que un puerco está escarbando los nidos. No hay cáscaras de huevos, hay moscas, hay huellas de cangrejos y tierra fresca removida<br>12/08, se encuentra intacto sin visitantes indeseados.<br>18/8 huellas de cangrejos que pasan por el nido.</li><li id="nido-69" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 60</b>: 11/8, Nido 60, son fecha, huellas del paso se pequeños puercos al parecer es una puerca con puerquitos.<br>12/8, Se encuentra igual. sin huellas no fue visitado</li><li id="nido-70" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 61</b>: 11/8, sin fecha de registro, hay cáscaras de huevo, hay huellas de cerdo.<br>12/8, el cerdo paso y escarbo. no hay moscas.<br>18/8 se mantiene igual no fue visitado</li><li id="nido-71" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 62</b>: 11/8,  sin fecha de registro,hojas , una piedra, un pomo, huellas de cangrejos<br>12/8, igual no fue visitado<br>15/8, se mantiene igual</li><li id="nido-72" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 63</b>: 11/8, sin fecha de registro, ubicado al sol hay cáscaras de huevos flexibles ladera NW<br>12/8, gual que ayer + huellas de cangrejos, no hay moscas<br>15/8, 7:31 cáscaras de huevo flexible<br>18/8 no fue visitado.</li><li id="nido-73" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 64</b>: 11/8, sin fecha de registro, nido entre Dos matas en la zona C, hay hojas</li><li id="nido-74" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 65</b>: 11/8, sin fecha de registro,nido ubicado a la sombra de la zona C,  hay cáscaras de huevos frescas. huellas de cangrejos, moscas huellas de cerdo.<br>15/8, cáscaras frescas.</li><li id="nido-75" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 66</b>: 11/8, sin fecha de registro</li><li id="nido-76" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 67</b>: 11/8, sin fecha de registro, nido ubicado en el sol frontera zona C<br>15/8, se mantiene igual.</li><li id="nido-77" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 68</b>: 11/8, sin fecha de registro, con hojas y palos bajo la sombra de una planta<br>12/08, se mantienen igual</li><li id="nido-78" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 69</b>: 11/08, sin fecha de registro, hay rastro de entrada y salida de una tortuga<br>15/8, se mantiene igual, el cerdo pequeño paso por aquí y siguió</li><li id="nido-79" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 70</b>: 11/8, sin fecha de registro, hay rastro de tortuga</li><li id="nido-80" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 71</b>: 11/8, sin fecha de registro,</li><li id="nido-81" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 72</b>: 11/08, sin fecha de registro, nido ubicado al sol de tro de zona C<br>15/08, se mantiene igual</li><li id="nido-82" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 73</b>: 11/8, sin fecha de registro, evidencia de rastro de tortugas<br>15/8, se mantiene igual.</li><li id="nido-83" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 74</b>: 11/8,sin fecha de registro, nido en zona C a la sombra, hay cáscaras de huevo frescas.<br>15/8, hay cáscaras de huevos frescas.</li><li id="nido-84" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 75</b>: 11/8, sin fecha de registro, nido al sol dentro de la zona C<br>15/8, se mantiene igual.</li><li id="nido-85" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 76</b>: 11/8, sin fecha de registro, Nido a la sombra de árboles del farallón zona C. Hay hojas cantidad<br>12/8, el cerdo entró al nido y salió. se puso a escarbar fuera bastante profundo , no hay moscas<br>13/8, no fue visitado. se ve bien.</li><li id="nido-86" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 77</b>: 11/8, sin fecha de registro,nido a la sombra en zona C, hay cáscaras de huevo<br>15/8, Se mantiene igual</li><li id="nido-87" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 78</b>: 11/8, sin fecha de registro, En el Sol zona C, con evidencia de rastro de tortuga<br>15/8, se mantiene igual</li><li id="nido-88" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 79</b>: 11/8, sin fecha de registro, nido en el sol frontera zona C, con evidencia de rastro de tortuga que entra y sale<br>15/8, hay cáscaras de huevo en la ladera SE, moscas</li><li id="nido-89" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 80</b>: 11/08, sin fecha<br>15/8, se mantiene igual</li><li id="nido-90" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 81</b>: 12/08, sin fecha de registro, con marcas de rastro  de tortuga<br>15/8, Evidencias de que el cerdo grande paso , estuvo escarbando. hay cáscaras de huevo frescas ladera NE. se procede a tapar con arena y enmarcar con piedras. hay moscas. se le pone una caña brava encima</li><li id="nido-91" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 82</b>: 11/08, sin fecha , con rastros de tortuga<br>15/8 evidencias de que el cerdo estuvo escarbando. no hay moscas. no hay cáscaras de huevo.se procede a tapar con arena y se pone una caña brava arriba</li><li id="nido-92" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 83</b>: 12/8, Anoche antes de  las 2 entró una tortuga y se puso hacer nido.<br>Hoy a las 8:10 durante el recorrido de inspección se detecta que el cerdo entró al nido y se puso a escarbar . se ven muchas cáscaras de huevo blancas y blandas y muchas  moscas. al parecer este lugar tenía antes un nido. El cerdo comió huevos y dejo abierto el nido para otros animales.<br>13/8 fue visitado por el cerdo. hay moscas y cáscaras de huevo ladera S. Se procede a tapar el nido. <br>Nido en la mitad de la zona B, bajo el Sol zona de arena.</li><li id="nido-93" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 84</b>: 11/08, sin fecha de registro, el nido está después de la zona de piedra cuando empieza la arena al sol<br>12/8, evidencias de que un cerdo se metió en el nido a escarbar, cáscaras de huevo, moscas<br> 18/8 no fue visitado.</li><li id="nido-94" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 85</b>: 13/8, sin fecha de registro, El cerdo encontró un nido no marcado. escarbo profundo.cáscaras de huevo en la ladera E y W. huellas de cangrejos. moscas.se procede a tapar el hueco con arena y piedras por la frontera.<br>16/8, se mantiene igual</li><li id="nido-95" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 86</b>: 12/8, nido al sol en zona C, con huellas de tortuga que entran y salen de anoche.<br>15/8,hay cáscaras de huevos flexibles ladera SE, evidencias de que un cerdo estuvo escarbando profundo,e procede a tapar el nido con arena.<br>18/8, el cerdo estuvo escarbando pero no encontró el nido, siguió.</li><li id="nido-96" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 87</b>: 15/8, en la madrugada entro una tortuga hizo nido. Huellas de tortuga que entra y sale. ubicado al sol frontera zona C. 7:23 El cerdo pequeño paso por aquí y siguió.<br>17/8, 8:30 El cerdo grande con cerditos entró al nido, escarbo y llegó a los huevos. hay cáscaras frescas y moscas. no hay huellas de cangrejos. se procede a tapar y enmarcar.<br>18/8 el cerdo intento escarbar pero no profundizó, siguió. se vuelve a tapar.</li><li id="nido-97" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 88</b>: 13/8 rastro de tortuga, nido al sol en frontera con zona C<br>15/8, evidencias de que el cerdo escarbo profundo. no hay cáscaras de huevo, no hay moscas. se procede a tapar con arena y enmarcar con piedras.</li><li id="nido-98" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 89</b>: 11/08, sin fecha de registro, nido en la frontera de la zona C a la sombra de una mata. cantidad de hojas dentro del nido.<br>15/8, se mantiene igual. se le pone una caña brava arriba.</li><li id="nido-99" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 90</b>: 11/8, sin fecha de registro, sin cáscaras, hay huellas de pequeños cerdos.<br>12/8, igual. no fue visitado</li><li id="nido-100" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 91</b>: 11/8, sin fecha de registro, hay hojas en el nido<br>12/08, idem al día anterior<br>13/8 , se ve bien.<br>16/8, se mantiene igual</li><li id="nido-101" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 92</b>: 17/8, ubicados en medio de zonas B después de pasar la zona de piedras, en la arena soleado.<br>el Cerdo encontró un nido no marcado. escarbo profundo. hay cáscaras de huevo frescas. moscas. no hay huellas de cangrejos.<br>se procede a tapar y enmarcar con piedras para señalar el lugar de un nido depredador.<br>18/8 no fue visitado por el cerdo. Hay huellas de cangrejos que pasan por el lugar.</li><li id="nido-102" style="padding:5px; cursor:pointer;"><b>Playa Caleta Larga - Nido 93</b>: 18/8 Hoy antes de las 2:10 de la madrugada  entró una tortuga.<br> Hay huellas de tortuga que entran y salen. Hace el nido debajo de árboles caídos en frontera con Zona C. Se procede a marcar el lugar con baliza y pomo.<br>18/8 6:05 Se mantiene igual. no fue visitado por animales.<br>18/8 8:10 En el regreso del recorrido se detecta que el cerdo grande, escarba profundo y llega al nido.<br> Hay cáscaras de huevo ladera S dentro y fuera en cantidades. Hay moscas. Se procede a tapar el nido. El cerdo no ha dejado un nido intacto desde que llegamos.</li><li id="nido-103" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 01</b>: Tipo: TV<br>Tortuga: Rafaela<br>Fecha: 2025/07/02 4:52<br>Huevos: 94<br>Ancho cinta: 94<br>Largo cinta: 104<br>Ancho Pie de Rey: 67<br>Largo pie de Rey: 101</li><li id="nido-104" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 02</b>: Tipo: TV<br>Tortuga: Manca<br>Fecha: 2025/07/03 2:23<br>Huevos: 138<br>Ancho cinta: 101<br>Largo cinta: 115<br>Ancho Pie de Rey: 82<br>Largo pie de Rey: 109</li><li id="nido-105" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 03</b>: Tipo: TV<br>Tortuga: Aurora<br>Fecha: 2025/07/06 3:00<br>Huevos: 104<br>Ancho cinta: 102<br>Largo cinta: 106.5<br>Ancho Pie de Rey: 78<br>Largo pie de Rey: 101.5</li><li id="nido-106" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 04</b>: Tipo: TV<br>Tortuga: Carlota<br>Fecha: 2025/07/06 2:37<br>Huevos: 127<br>Ancho cinta: 97<br>Largo cinta: 106<br>Ancho Pie de Rey: 77<br>Largo pie de Rey: 101</li><li id="nido-107" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 05</b>: Tipo: TV<br>Tortuga: Daniela<br>Fecha: 2025/07/06 3:57<br>Huevos: 111</li><li id="nido-108" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 06</b>: Tipo: TV<br>Tortuga: Gregoria<br>Fecha: 2025/07/08 22:30<br>Huevos: 101<br>Ancho cinta: 106<br>Largo cinta: 111<br>Ancho Pie de Rey: 81<br>Largo pie de Rey: 106</li><li id="nido-109" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 07</b>: Tipo: TV<br>Tortuga: Humberta<br>Fecha: 2025/07/09<br>Huevos: 84<br>Ancho cinta: 99<br>Largo cinta: 102<br>Ancho Pie de Rey: 71<br>Largo pie de Rey: 90</li><li id="nido-110" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 28</b>: Tipo: TV<br>Fecha: 2025/8/12<br>Huevos: 127</li><li id="nido-111" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 32</b>: Tipo: TV<br>Fecha: 2025/8/10<br>Huevos: 110</li><li id="nido-112" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 33</b>: Tipo: TV<br>Fecha: 2025/8/11<br>Huevos: 113</li><li id="nido-113" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 34</b>: Tipo: TV<br>Fecha: 2025/8/11<br>Huevos: 130</li><li id="nido-114" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 35</b>: Tipo: TV<br>Fecha: 2025/8/11<br>Huevos: 115</li><li id="nido-115" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 36</b>: Tipo: TV<br>Fecha: 2025/8/11<br>Huevos: 158</li><li id="nido-116" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 39</b>: Tipo: TV<br>Fecha: 2025/8/13<br>Huevos: 113</li><li id="nido-117" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 41</b>: Tipo: TV<br>Fecha: 2025/8/14<br>Huevos: 120</li><li id="nido-118" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 42</b>: Tipo: TV<br>Fecha: 2025/8/16<br>Huevos: 130</li><li id="nido-119" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 43</b>: Tipo: TV<br>Fecha: 2025/8/15<br>Huevos: 92</li><li id="nido-120" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 44</b>: Tipo: TV<br>Fecha: 2025/8/11<br>Huevos: 105</li><li id="nido-121" style="padding:5px; cursor:pointer;"><b>Caleta del Piojo - Nido 52</b>: Tipo: TV<br>Fecha: 2025/8/18<br>Huevos: 120</li></ul></div>
+  </div>
+  <div id="coordenadas" style="padding:10px; font-weight:bold;"></div>
+
+  
+<script>
+  var map = window.map_85b86c94533544cb22d54da25a51dda7;
+  var markers = [];
+
+   function onMarkerClick(idx) {
+    var items = document.querySelectorAll("#lista-nidos li");
+    items.forEach(function(li) { li.style.backgroundColor = ""; });
+    var selected = document.getElementById("nido-" + idx);
+    if (selected) {
+      selected.style.backgroundColor = "#ffff99";
+      selected.scrollIntoView({behavior: "smooth", block: "center"});
+    }
+    // Mostrar coordenadas
+    if(markers[idx]) {
+      var latlng = markers[idx].getLatLng();
+      var coordDiv = document.getElementById("coordenadas");
+      coordDiv.innerHTML = "Coordenadas: " + latlng.lat.toFixed(5) + ", " + latlng.lng.toFixed(5);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    map.eachLayer(function(layer) {
+      if(layer instanceof L.Marker) {
+        markers.push(layer);
+      }
+    });
+
+    markers.forEach(function(marker, idx) {
+      marker.on('click', function() {
+        onMarkerClick(idx);
+      });
+    });
+
+    var items = document.querySelectorAll("#lista-nidos li");
+    items.forEach(function(li, idx) {
+      li.addEventListener('click', function() {
+        markers[idx].openPopup();
+        map.setView(markers[idx].getLatLng(), map.getZoom());
+        onMarkerClick(idx);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
